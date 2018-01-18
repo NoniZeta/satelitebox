@@ -17,38 +17,22 @@
 
 # from __future__ import unicode_literals
 
-from collections import Counter
 import gi
-from core import PORT_VOCAL_RECEIVER, PORT_VOCAL_SENDER, PATH_VOCAL, ACOUSTIC,\
-    DICTIONARY, KEYPHRASE
 gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
 
-import json
 import pyaudio
-#import Resampler as r 
-import socket
-from pocketsphinx import *
-from sphinxbase import *
 import threading
 import time
 
-from core.Socket_bidir import SocketBidir
-import os
+from pocketsphinx import *
+from sphinxbase import *
+
+from core.SocketBidirection import SocketBidir
+from core import PORT_VOCAL_RECEIVER, PORT_VOCAL_SENDER, PATH_VOCAL, ACOUSTIC,\
+    DICTIONARY, KEYPHRASE
     
 gst = Gst
-
-# Pyaudio Initialization
-
-#FORMAT = pyaudio.paALSA
-
-#current_dir = os.path.dirname(__file__)
-#vocal = './resources/model_vocal'
-#path_vocal = os.path.join(current_dir, vocal)
-
-#key_phrase_list_file = 'keyphrase.list'
-#hmmd_file = 'acoustic'
-#dictp_file = 'topi.dic'
 
 key_phrase_list = os.path.join(PATH_VOCAL, KEYPHRASE)
 hmmd = os.path.join(PATH_VOCAL, ACOUSTIC)
@@ -59,14 +43,12 @@ class StreamVocal(threading.Thread):
     
     s = None
     
-    
     def __init__(self, parent):
         super(StreamVocal, self).__init__()
         self.parent = parent
         self.kill = False 
         self.playertts = self.parent.playertts
         self.p = pyaudio.PyAudio()
- #       self.resampler = r.Resampler(conf.RATE)
 
         self.t_start = 0
         self.t_end = 0
@@ -134,40 +116,6 @@ class StreamVocal(threading.Thread):
         """
         self.s = SocketBidir(self.parent.ipDetect, port_receiver, port_sender, False, self.socketCallback)
         self.playertts.play('prete')
-
-        #self.loop.run()  
-        #self.pipeline.set_state(Gst.State.NULL)
-        #self.createStream();
-        #self.stream.start_stream()
-        #self.decoder.start_utt()
-        #print "Stream client running..."
-        #while not self.kill:
-#            try:
-        #        buf = self.stream.read(12000)
-        #        if not buf:
-        #            break
-        #        newframes, newbuf = self.resampler.resample(buf)
-#                self.decoder.process_raw(newbuf, False, False)
-#                hypothesis = self.decoder.hyp()
-#                if hypothesis != None and hypothesis.hypstr != '': 
-#                    print hypothesis.hypstr#
-#                    self.decoder.end_utt() 
-#                    self.stream.stop_stream()
-#                    self.decode_speech()
-#                    self.decoder.start_utt()
-#                    self.stream.start_stream() 
-        #    except Exception as e:
-        #        print "erreur decode Jarvis: " + e.__str__()
-        #        #[Errno 32] Broken pipe
-        #        if "[Errno 32]" in e.__str__() :
-        #            self.playertts.play('ordre_impossible')
-        #            self.stop()
-        #        if self.stream.is_stopped() :
-        #            print "Redemarrage du stream"
-        #            self.stream.start_stream()
-        #           
-        #self.p.close(self.stream)
-        #self.p.terminate()
 
     """
         GStreamer appsink : Recupère chaque sample emit par le micro qu'on décompose en buffer

@@ -53,7 +53,7 @@ class SocketBidir():
     
     def send(self, input_time=0, repete_time=0, key=None, message=None):
         json2Send = self.utils.obj2Json(input_time, repete_time, key, message)
-        self.socketSender.send(json2Send)    
+        self.socketSender.send(json2Send.encode())    
 
     def stop(self):
         print ("Stop SocketBidir")
@@ -83,7 +83,7 @@ class SocketReicever(threading.Thread):
         self.client, self.address = self.s.accept()
             
         while not self.kill :
-            dataJson = self.client.recv(4096)
+            dataJson = self.client.recv(4096).decode()
             data = self.parent.utils.json2obj(dataJson)
             if data :
                 if data.key == "connected":
@@ -123,10 +123,10 @@ class Utils():
     
     def json2obj(self, data): 
             # text_erreur = {"message" : "erreur"}
-        print (data)
+        #print (data)
         result = None
         try:
-            eltscount = data.encode('utf8').count('{')
+            eltscount = data.count('{')
             if eltscount > 1 :
                 index = data.index('}') + 1
                 print (data[:index])

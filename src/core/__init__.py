@@ -33,7 +33,7 @@ HOME_DIR        = os.path.expanduser("~")
 
 TMP_FOLDER= os.path.join(HOME_DIR, ".cache/topibox_tmp/")
 
-LOG_FILE = os.path.join(TMP_FOLDER, "sateliteBox.log")
+LOG_FILE = os.path.join(TMP_FOLDER, "SateliteBox.log")
 
 if not os.path.exists(TMP_FOLDER):
     os.makedirs(TMP_FOLDER)
