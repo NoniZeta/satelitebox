@@ -1,9 +1,0 @@
-eclipse.preferences.version=1
-encoding//src/core/Connect.py=utf-8
-encoding//src/core/PlayerMusic.py=utf-8
-encoding//src/core/PlayerTTS.py=utf-8
-encoding//src/core/SocketBidirection.py=utf-8
-encoding//src/core/StreamCamera.py=utf-8
-encoding//src/core/StreamMicro.py=utf-8
-encoding//src/core/StreamVocal.py=utf-8
-encoding//src/core/__init__.py=utf-8

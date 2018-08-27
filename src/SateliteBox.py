@@ -9,10 +9,9 @@ sys.path.append("/usr/local/lib/python2.7/dist-packages/topibox_sat/")
 
 #import websocket
 from connect import Connexion
-import conf
 
 # Deafults
-LOG_FILENAME = conf.LOG_FILE
+LOG_FILENAME = LOG_FILE
 LOG_LEVEL = logging.INFO  # Could be e.g. "DEBUG" or "WARNING"
 
 # Define and parse command line arguments
@@ -59,7 +58,7 @@ sys.stderr = MyLogger(logger, logging.ERROR)
 #while 1 :
 #    print "TEST"
 #    time.sleep(5)
-print "Lancement de l'appli..."
+print ("Lancement de l'appli...")
 app = Connexion()
 app.scan()
 
